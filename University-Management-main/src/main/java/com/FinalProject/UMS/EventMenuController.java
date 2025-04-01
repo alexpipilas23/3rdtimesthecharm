@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -26,25 +27,42 @@ public class EventMenuController {
      */
     @FXML
     protected void onAdminButtonClick() {
-        try {
-            // Load the Admin Event View from its FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-event-view.fxml"));
-            Parent root = loader.load();
+        // Get the current user role (assumes you have a method to fetch the role)
+        String currentUserRole = LoginController.getCurrentUserRole(); // Fetch current user role from LoginController
 
-            // Retrieve the current stage (window) from the admin button
-            Stage stage = (Stage) adminButton.getScene().getWindow();
+        if ("ADMIN".equals(currentUserRole)) {
+            // Proceed to load Admin Event View if the role is ADMIN
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-event-view.fxml"));
+                Parent root = loader.load();
 
-            // Set a new scene with the admin event view layout
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Admin View"); // Set the title for the new window
-            stage.show();
-        } catch (IOException e) {
-            // Print error details if loading fails
-            e.printStackTrace();
+                // Retrieve the current stage (window) from the admin button
+                Stage stage = (Stage) adminButton.getScene().getWindow();
+
+                // Set a new scene with the admin event view layout
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Admin View");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace(); // Handle loading errors
+            }
+        } else {
+            // Show an access denied message if the user is not an admin
+            showPopup("Access Denied", "You do not have permission to access the Admin Event View.", Alert.AlertType.ERROR);
         }
     }
 
+    /**
+     * Helper method to show a popup alert.
+     */
+    private void showPopup(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     /**
      * Handles the click event for the user button.
      * Loads the event-user-view.fxml file and switches the scene to the User View.
