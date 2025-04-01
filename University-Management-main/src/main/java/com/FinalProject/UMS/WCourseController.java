@@ -15,6 +15,12 @@ import java.time.LocalDate;
 public class WCourseController {
 
     @FXML
+    private Button addCourseButton;  // Link the 'Add Course' button
+
+    @FXML
+    private Button deleteCourseButton;  // Link the 'Delete Course' button
+
+    @FXML
     private TextField txtCourseCode;
 
     @FXML
@@ -88,6 +94,7 @@ public class WCourseController {
 
     private void adjustVisibilityBasedOnRole() {
         if ("USER".equals(userRole)) {
+            // Disable text fields and spinners for users
             txtCourseCode.setDisable(true);
             txtCourseName.setDisable(true);
             txtSubject.setDisable(true);
@@ -96,11 +103,26 @@ public class WCourseController {
             spnCapacity.setDisable(true);
             dpExamDate.setDisable(true);
             txtLocation.setDisable(true);
+
+            // Disable buttons for users
+            addCourseButton.setDisable(true);
+            deleteCourseButton.setDisable(true);
+        } else {
+            // Enable buttons and fields for admins or other roles
+            addCourseButton.setDisable(false);
+            deleteCourseButton.setDisable(false);
         }
     }
 
     @FXML
     private void addCourse() {
+        // Check if the user is not an admin
+        if ("USER".equals(userRole)) {
+            // Show an error message if the user is a regular user
+            showAlert("Access Denied", "You do not have permission to add courses.");
+            return; // Exit the method if the user is a regular user
+        }
+
         try {
             String courseCode = txtCourseCode.getText();
             String courseName = txtCourseName.getText();
