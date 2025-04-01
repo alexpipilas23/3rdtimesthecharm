@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      spacing="10" alignment="CENTER" style="-fx-padding: 20; -fx-background-color: #f4f4f4;">
+<VBox alignment="CENTER" spacing="10" style="-fx-padding: 20; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 
-    <Label text="Tuition Management" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Tuition Management" />
 
-    <TextField promptText="Student ID" prefWidth="200"/>
-    <TextField promptText="Amount" prefWidth="200"/>
+    <TextField prefWidth="200" promptText="Student ID" />
+    <TextField prefWidth="200" promptText="Amount" />
 
-    <Button text="Pay Tuition" prefWidth="100" prefHeight="30"
-            style="-fx-font-size: 14px; -fx-background-color: #607D8B; -fx-text-fill: white;"/>
-    <Button text="Cancel" prefWidth="100" prefHeight="30"
-            style="-fx-font-size: 14px; -fx-background-color: #555555; -fx-text-fill: white;"/>
+    <Button prefHeight="30" prefWidth="100" style="-fx-font-size: 14px; -fx-background-color: #65a8c5; -fx-text-fill: white;" text="Pay Tuition " />
+    <Button prefHeight="30" prefWidth="100" style="-fx-font-size: 14px; -fx-background-color: #555555; -fx-text-fill: white;" text="Cancel" />
 
 </VBox>

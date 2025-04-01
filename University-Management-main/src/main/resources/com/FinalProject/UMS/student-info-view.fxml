@@ -25,27 +25,27 @@
             <Separator prefWidth="200.0" />
             <TableView fx:id="studentTable" cache="true" cacheHint="QUALITY" depthTest="ENABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="426.0" prefWidth="1316.0">
                 <columns>
-                    <TableColumn prefWidth="150" text="Last Name">
+                    <TableColumn prefWidth="200" text="Last Name">
                         <cellValueFactory>
                             <PropertyValueFactory property="lastName" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="150" text="First Name">
+                    <TableColumn prefWidth="200" text="First Name">
                         <cellValueFactory>
                             <PropertyValueFactory property="firstName" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="200" text="Email">
+                    <TableColumn prefWidth="250" text="Email">
                         <cellValueFactory>
                             <PropertyValueFactory property="email" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn minWidth="0.0" prefWidth="101.0" text="Student ID">
+                    <TableColumn minWidth="0.0" prefWidth="250.0" text="Student ID">
                         <cellValueFactory>
                             <PropertyValueFactory property="id" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn minWidth="0.0" prefWidth="234.0" text="Role">
+                    <TableColumn minWidth="0.0" prefWidth="334.0" text="Role">
                         <cellValueFactory>
                             <PropertyValueFactory property="role" />
                         </cellValueFactory>

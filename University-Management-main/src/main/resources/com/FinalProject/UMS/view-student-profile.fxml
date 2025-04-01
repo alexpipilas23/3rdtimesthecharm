@@ -14,7 +14,7 @@
     <TextField promptText="Student ID" prefWidth="200"/>
 
     <Button text="View Profile" prefWidth="100" prefHeight="30"
-            style="-fx-font-size: 14px; -fx-background-color: #FF9800; -fx-text-fill: white;"/>
+            style="-fx-font-size: 14px; -fx-background-color: #af8544; -fx-text-fill: white;"/>
     <Button text="Cancel" prefWidth="100" prefHeight="30"
             style="-fx-font-size: 14px; -fx-background-color: #555555; -fx-text-fill: white;"/>
 
