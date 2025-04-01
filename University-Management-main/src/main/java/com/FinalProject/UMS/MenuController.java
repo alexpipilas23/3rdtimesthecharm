@@ -116,12 +116,24 @@ public class MenuController {
 
     @FXML
     private void handleFacultyManagement(ActionEvent event) {
-        loadScene("faculty-view.fxml", "Faculty Management", event);
+        if (userRole == null || "USER".equals(userRole)) {  // Check if role is USER or null
+            // Show an error message if the user is not an admin
+            showAlert("Access Denied", "You do not have permission to access Faculty Management.");
+        } else {
+            // Load the Faculty Management view if the user is an admin
+            loadScene("faculty-view.fxml", "Faculty Management", event);
+        }
     }
 
     @FXML
     private void handleAssignFacultyCourses(ActionEvent event) {
-        loadScene("assignFacultyCourses.fxml", "Assign Faculty Courses", event);
+        if (userRole == null || "USER".equals(userRole)) {  // Check if role is USER or null
+            // Show an error message if the user is not an admin
+            showAlert("Access Denied", "You do not have permission to assign faculty courses.");
+        } else {
+            // Load the Assign Faculty Courses scene if the user is an admin
+            loadScene("assignFacultyCourses.fxml", "Assign Faculty Courses", event);
+        }
     }
 
     @FXML
