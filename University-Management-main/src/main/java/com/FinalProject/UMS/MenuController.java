@@ -17,7 +17,13 @@ import java.util.logging.Logger;
 public class MenuController {
 
     private static final Logger LOGGER = Logger.getLogger(MenuController.class.getName());
+    private String userRole;
 
+    @FXML
+    public void initialize() {
+        this.userRole = LoginController.getCurrentUserRole();  // Retrieve role from LoginController
+        System.out.println("User Role: " + userRole);  // Debugging: Check if role is set correctly
+    }
     @FXML
     private Button subjectManagementButton;
 
@@ -33,11 +39,7 @@ public class MenuController {
     @FXML
     private Button eventManagementButton;
 
-    private String userRole;
 
-    public void initialize() {
-        // Initialization code, if needed
-    }
 
     public void setUserRole(String role) {
         this.userRole = role;
@@ -116,22 +118,18 @@ public class MenuController {
 
     @FXML
     private void handleFacultyManagement(ActionEvent event) {
-        if (userRole == null || "USER".equals(userRole)) {  // Check if role is USER or null
-            // Show an error message if the user is not an admin
+        if (userRole == null || "USER".equals(userRole)) {
             showAlert("Access Denied", "You do not have permission to access Faculty Management.");
         } else {
-            // Load the Faculty Management view if the user is an admin
             loadScene("faculty-view.fxml", "Faculty Management", event);
         }
     }
 
     @FXML
     private void handleAssignFacultyCourses(ActionEvent event) {
-        if (userRole == null || "USER".equals(userRole)) {  // Check if role is USER or null
-            // Show an error message if the user is not an admin
+        if (userRole == null || "USER".equals(userRole)) {
             showAlert("Access Denied", "You do not have permission to assign faculty courses.");
         } else {
-            // Load the Assign Faculty Courses scene if the user is an admin
             loadScene("assignFacultyCourses.fxml", "Assign Faculty Courses", event);
         }
     }
@@ -199,3 +197,4 @@ public class MenuController {
         }
     }
 }
+
