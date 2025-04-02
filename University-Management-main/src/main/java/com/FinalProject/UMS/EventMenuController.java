@@ -28,7 +28,7 @@ public class EventMenuController {
     @FXML
     protected void onAdminButtonClick() {
         // Get the current user role (assumes you have a method to fetch the role)
-        String currentUserRole = LoginController.getCurrentUserRole(); // Fetch current user role from LoginController
+        String currentUserRole = String.valueOf(LoginController.getCurrentUser()); // Fetch current user role from LoginController
 
         if ("ADMIN".equals(currentUserRole)) {
             // Proceed to load Admin Event View if the role is ADMIN

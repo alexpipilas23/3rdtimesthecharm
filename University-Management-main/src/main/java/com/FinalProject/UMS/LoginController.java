@@ -4,20 +4,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoginController {
+
     @FXML
     private TextField usernameField;
     @FXML
@@ -29,10 +30,17 @@ public class LoginController {
 
     private Map<String, User> users;
     private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
-    private static String currentUserRole;
-    public static String getCurrentUserRole() {
-        return currentUserRole;
+
+    private static Student currentUser;  // Added currentUser field
+
+    public static Student getCurrentUser() {
+        return currentUser;
     }
+
+    private void setCurrentUser(Student student) {
+        currentUser = student;
+    }
+
     public void initialize() {
         users = ExcelDatabase.loadUsers();
         if (users != null) {
@@ -48,10 +56,12 @@ public class LoginController {
         String password = passwordField.getText().trim();
 
         LOGGER.log(Level.INFO, "Attempting login for user: {0}", username);
+        LOGGER.log(Level.INFO, "Entered password: {0}", password);
+        LOGGER.log(Level.INFO, "Entered password (hex): {0}", toHexString(password));
 
+        // Hardcoded admin and user for quick testing
         if ("a".equals(username) && "a".equals(password)) {
             LOGGER.info("Admin login successful");
-            currentUserRole = "ADMIN";
             showPopup("Login Successful", "Welcome, Admin!", Alert.AlertType.INFORMATION);
             navigateToAdminDashboard(event);
             return;
@@ -59,7 +69,6 @@ public class LoginController {
 
         if ("u".equals(username) && "u".equals(password)) {
             LOGGER.info("User login successful");
-            currentUserRole = "USER";
             showPopup("Login Successful", "Welcome, User!", Alert.AlertType.INFORMATION);
             navigateToUserDashboard(event);
             return;
@@ -72,10 +81,19 @@ public class LoginController {
 
         User user = users.get(username);
         if (user != null) {
+            LOGGER.log(Level.INFO, "Stored password for user {0}: {1}", new Object[]{username, user.getPassword()});
+            LOGGER.log(Level.INFO, "Stored password (hex): {0}", toHexString(user.getPassword()));
             if (user.authenticate(password)) {
+                if (user instanceof Student) { // Check if user is a Student
+                    setCurrentUser((Student) user);  // Safe casting
+                } else {
+                    LOGGER.warning("Authenticated user is not a student.");
+                    showPopup("Login Failed", "This login is not for a student user.", Alert.AlertType.ERROR);
+                    return;
+                }
                 LOGGER.log(Level.INFO, "User {0} authenticated successfully", username);
                 showPopup("Login Successful", "Welcome, " + username + "!", Alert.AlertType.INFORMATION);
-                navigateToDashboard(user, event);
+                navigateToUserDashboard(event);
             } else {
                 LOGGER.warning("Incorrect password for user: " + username);
                 errorMessageLabel.setText("Invalid password. Please try again.");
@@ -86,11 +104,6 @@ public class LoginController {
             errorMessageLabel.setText("User ID not found!");
             showPopup("Login Failed", "User ID not found", Alert.AlertType.ERROR);
         }
-    }
-
-    private void navigateToDashboard(User user, ActionEvent event) {
-        LOGGER.log(Level.INFO, "Navigating to dashboard for user id: {0}", user.getId());
-        // Navigation logic (Currently kept as is, menu-controller not modified yet)
     }
 
     private void navigateToAdminDashboard(ActionEvent event) {
@@ -123,5 +136,15 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // Helper method to convert a string to its hexadecimal representation.
+    private String toHexString(String input) {
+        if (input == null) return "";
+        StringBuilder hex = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            hex.append(String.format("%02X ", (int) c));
+        }
+        return hex.toString().trim();
     }
 }

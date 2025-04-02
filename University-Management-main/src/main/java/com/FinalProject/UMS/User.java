@@ -13,6 +13,10 @@ public class User {
         this.password = password;
     }
 
+    public User() {
+
+    }
+
     // Getter method to retrieve the user's ID
     public String getId() {
         return id;

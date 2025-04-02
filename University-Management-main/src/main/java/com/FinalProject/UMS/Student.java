@@ -1,6 +1,8 @@
 package com.FinalProject.UMS;
 
-public class Student {
+import java.util.List;
+
+public class Student extends User {
     private String lastName;
     private String firstName;
     private String email;
@@ -17,6 +19,7 @@ public class Student {
     public Student(String id, String firstName, String lastName, String address, String telephone, String email,
                    String academicLevel, String currentSemester, String profilePhoto, String subjectsRegistered,
                    String thesisTitle, double progress, String password) {
+        super(); // Not passing password here, so User's password remains unset.
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,103 +31,16 @@ public class Student {
         this.subjectsRegistered = subjectsRegistered;
         this.thesisTitle = thesisTitle;
         this.progress = progress;
-        this.password = password;
+        this.password = password; // Setting Student's own password field.
     }
 
-    // Getters and Setters
-    public String getLastName() {
-        return lastName;
+    // Override the authenticate method to use the Student's password field.
+    @Override
+    public boolean authenticate(String password) {
+        if (this.password == null || password == null) {
+            return false;
+        }
+        return this.password.equals(password);
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-
-    public String getSubjectsRegistered() {
-        return subjectsRegistered;
-    }
-
-    public void setSubjectsRegistered(String subjectsRegistered) {
-        this.subjectsRegistered = subjectsRegistered;
-    }
-
-    public String getThesisTitle() {
-        return thesisTitle;
-    }
-
-    public void setThesisTitle(String thesisTitle) {
-        this.thesisTitle = thesisTitle;
-    }
-
-    public double getProgress() {
-        return progress;
-    }
-
-    public void setProgress(double progress) {
-        this.progress = progress;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -36,12 +36,10 @@ public class MenuController {
     private String userRole;
 
     public void initialize() {
-        // Initialization code, if needed
     }
 
     public void setUserRole(String role) {
         this.userRole = role;
-        // You can update the UI based on the user role here
     }
 
     @FXML
@@ -52,7 +50,7 @@ public class MenuController {
     @FXML
     private void handleSubjectManagement(ActionEvent event) {
         LOGGER.log(Level.INFO, "Subject Management button clicked");
-        loadScene("/com/FinalProject/UMS/SubjectManagement.fxml", "Subject Management", event);  // Corrected path and using loadScene
+        loadScene("/com/FinalProject/UMS/SubjectManagement.fxml", "Subject Management", event);
     }
 
     @FXML
@@ -74,6 +72,7 @@ public class MenuController {
     private void handleViewSubject(ActionEvent event) {
         loadScene("viewSubject.fxml", "View Subject", event);
     }
+
     @FXML
     private void handleCourseManagement(ActionEvent event) {
         loadScene("CourseManagement-view.fxml", "Course Management", event);
@@ -116,22 +115,18 @@ public class MenuController {
 
     @FXML
     private void handleFacultyManagement(ActionEvent event) {
-        if (userRole == null || "USER".equals(userRole)) {  // Check if role is USER or null
-            // Show an error message if the user is not an admin
+        if (userRole == null || "USER".equals(userRole)) {
             showAlert("Access Denied", "You do not have permission to access Faculty Management.");
         } else {
-            // Load the Faculty Management view if the user is an admin
             loadScene("faculty-view.fxml", "Faculty Management", event);
         }
     }
 
     @FXML
     private void handleAssignFacultyCourses(ActionEvent event) {
-        if (userRole == null || "USER".equals(userRole)) {  // Check if role is USER or null
-            // Show an error message if the user is not an admin
+        if (userRole == null || "USER".equals(userRole)) {
             showAlert("Access Denied", "You do not have permission to assign faculty courses.");
         } else {
-            // Load the Assign Faculty Courses scene if the user is an admin
             loadScene("assignFacultyCourses.fxml", "Assign Faculty Courses", event);
         }
     }
@@ -163,13 +158,42 @@ public class MenuController {
 
     @FXML
     private void handleViewProfile(ActionEvent event) {
-        loadScene("viewProfile.fxml", "View Profile", event);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentManagementStudentaura.fxml"));
+            Parent root = loader.load();
+
+            StudentManagementMenuController controller = loader.getController();
+            Student currentStudent = LoginController.getCurrentUser();
+            controller.setStudentData(currentStudent);
+
+            Stage stage = new Stage();
+            stage.setTitle("View Profile");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error loading profile view: " + e.getMessage(), e);
+            showAlert("Error", "Failed to load profile view.");
+        }
     }
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        showAlert("Logout", "Logging out...");
-        // Add code here to log the user out and return to the login screen
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Login");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error during logout: " + e.getMessage(), e);
+            showAlert("Error", "Failed to log out.");
+        }
     }
 
     private void showAlert(String title, String message) {
@@ -190,7 +214,6 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Close the current window
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
         } catch (IOException e) {
