@@ -60,14 +60,16 @@ public class WCourseController {
         SpinnerValueFactory<Integer> capacityValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         spnCapacity.setValueFactory(capacityValueFactory);
 
-        // Hardcoded course data
+        this.userRole = LoginController.getCurrentUserRole();
+        System.out.println("User Role: " + userRole);  // Debugging output
+
         courseData.addAll(
-                new WCourse("MATH101", "Calculus I", "MATH", "1", 30, "Mon/Wed 9-11 AM", "12/15/2025", "Room 101", "Dr. Alan Turing"),
-                new WCourse("ENG101", "Literature Basics", "ENG", "1", 25, "Tue/Thu 10-12 PM", "12/16/2025", "Room 102", "Prof. Emily Bronte"),
-                new WCourse("CS101", "Intro to Programming", "CS", "1", 42, "Tue/Thu 12-2 PM", "12/16/2025", "Room 103", "Prof. Bahar Nozari"),
+                new WCourse("CALC1200", "Calculus II", "MATH", "1", 30, "Mon/Wed 9-11 AM", "12/15/2025", "Room 101", "Dr. Alan Turing"),
+                new WCourse("ENG1200", "Mechanics", "ENG", "1", 25, "Tue/Thu 10-12 PM", "12/16/2025", "Room 102", "Prof. Emily Bronte"),
+                new WCourse("ENGG1420", "Java Programming", "CS", "1", 42, "Tue/Thu 12-2 PM", "12/16/2025", "Room 103", "Prof. Bahar Nozari"),
                 new WCourse("CHEM101", "Intro to Chemistry", "CHEM", "1", 20, "Mon/Wed 3-4 PM", "12/14/2025", "Room 201", "Dr. Lucka Lucku"),
-                new WCourse("FREN101", "Intro to French", "FREN", "1", 22, "Tue/Thu 4:30-5:30", "12/13/2025", "Room 202", "Dr. Lakyn Copeland"),
-                new WCourse("ENGG402", "Water Resources", "ENGG", "1", 18, "Mon/Fri 9:00-10:30", "12/01/2025", "Room 203", "Dr. Albozr Ghanaba")
+                new WCourse("ENGG1500", "Linear Algebra", "ENGG", "1", 22, "Tue/Thu 4:30-5:30", "12/13/2025", "Room 202", "Dr. Lakyn Copeland"),
+                new WCourse("PHYS1150", "Physics", "PHYS", "1", 18, "Mon/Fri 9:00-10:30", "12/01/2025", "Room 203", "Dr. Albozr Ghanaba")
         );
 
         courseListView.setItems(courseData);
@@ -153,6 +155,16 @@ public class WCourseController {
 
     @FXML
     private void deleteCourse() {
+        // Retrieve the user role from LoginController
+        userRole = LoginController.getCurrentUserRole();
+
+        // Check if the user is not an admin
+        if (userRole == null || "USER".equals(userRole)) {
+            showAlert("Access Denied", "You do not have permission to delete courses.");
+            return; // Exit the method if the user is a regular user
+        }
+
+        // Proceed with deleting the selected course
         WCourse selectedCourse = courseListView.getSelectionModel().getSelectedItem();
         if (selectedCourse != null) {
             courseData.remove(selectedCourse);
@@ -209,3 +221,4 @@ public class WCourseController {
     }
 
 }
+
