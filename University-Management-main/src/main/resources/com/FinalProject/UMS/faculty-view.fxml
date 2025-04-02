@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <?import javafx.scene.control.*?>
-        <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" fx:controller="com.FinalProject.UMS.FacultyController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-    <Label fx:id="pageTitle" text="Faculty Management" />
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.FinalProject.UMS.FacultyController">
 
-    <TextField fx:id="nameField" promptText="Enter Faculty Name" visible="false"/>
-    <TextField fx:id="emailField" promptText="Enter Email" visible="false"/>
-    <TextField fx:id="departmentField" promptText="Enter Department" visible="false"/>
+    <Label fx:id="pageTitle" text="Faculty Management">
+      <font>
+         <Font size="24.0" />
+      </font></Label>
+
+    <TextField fx:id="nameField" promptText="Enter Faculty Name" visible="false" />
+    <TextField fx:id="emailField" promptText="Enter Email" visible="false" />
+    <TextField fx:id="departmentField" promptText="Enter Department" visible="false" />
 
     <HBox spacing="10.0">
-        <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
-        <Button fx:id="saveButton" text="Save Faculty" onAction="#saveFaculty" visible="false"/>
-        <Button fx:id="addFacultyButton" text="Add Faculty" onAction="#showAddFacultyForm"/>
+        <Button fx:id="backButton" onAction="#handleBack" prefHeight="60.0" prefWidth="89.0" text="Back" />
+        <Button fx:id="saveButton" onAction="#saveFaculty" text="Save Faculty" visible="false" />
+        <Button fx:id="addFacultyButton" onAction="#showAddFacultyForm" prefHeight="59.0" prefWidth="116.0" text="Add Faculty" />
     </HBox>
 
 </VBox>

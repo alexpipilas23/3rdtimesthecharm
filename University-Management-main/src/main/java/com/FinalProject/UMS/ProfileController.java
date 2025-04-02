@@ -42,17 +42,36 @@ public class ProfileController {
     @FXML
     protected void onReturnButtonClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("studentmanagecontroller.fxml"));
+            System.out.println("Return button clicked!");
+            String fxmlFile = "/com/FinalProject/UMS/profile-view.fxml";  // Full resource path
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) firstNameField.getScene().getWindow();
-            Scene scene = new Scene(root, 1366, 768);
-            stage.setScene(scene);
-            stage.setTitle("Hello");
+            stage.setScene(new Scene(root));
             stage.show();
+            System.out.println("Navigation successful to: " + fxmlFile);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error loading FXML: " + e.getMessage());
         }
     }
+
+    @FXML
+    public void initialize() {
+        System.out.println("ProfileController initialized!");
+        try {
+            // Simulate data loading
+            firstNameField.setText("John");
+            lastNameField.setText("Doe");
+            emailField.setText("john.doe@example.com");
+            System.out.println("Profile data loaded!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading profile data: " + e.getMessage());
+        }
+    }
+
+
 }
 
 

@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" fx:controller="com.FinalProject.UMS.FacultyListController">
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.FinalProject.UMS.FacultyListController">
 
-    <Label text="Faculty List" />
+    <Label text="Faculty List">
+      <font>
+         <Font size="24.0" />
+      </font></Label>
 
     <!-- Table to display faculty members -->
     <TableView fx:id="facultyTable">
         <columns>
-            <TableColumn text="ID" fx:id="idColumn"/>
-            <TableColumn text="Name" fx:id="nameColumn"/>
-            <TableColumn text="Email" fx:id="emailColumn"/>
-            <TableColumn text="Department" fx:id="departmentColumn"/>
-            <TableColumn text="Actions" fx:id="actionsColumn"/>
+            <TableColumn fx:id="idColumn" text="ID" />
+            <TableColumn fx:id="nameColumn" text="Name" />
+            <TableColumn fx:id="emailColumn" text="Email" />
+            <TableColumn fx:id="departmentColumn" text="Department" />
+            <TableColumn fx:id="actionsColumn" text="Actions" />
         </columns>
     </TableView>
 
-    <Button text="Add Faculty" onAction="#goBack" />
+    <Button onAction="#goBack" text="Add Faculty" />
 </VBox>
