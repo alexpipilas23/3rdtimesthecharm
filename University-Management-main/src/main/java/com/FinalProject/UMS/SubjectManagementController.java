@@ -68,7 +68,8 @@ public class SubjectManagementController implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         codeColumn.setCellValueFactory(new PropertyValueFactory<>("code"));
         subjectTable.setItems(subjectList);
-
+        this.userRole = LoginController.getCurrentUserRole();
+        System.out.println("User Role: " + userRole);  // Debugging output
         loadSubjectsFromExcel();
         adjustVisibilityBasedOnRole(); // Call adjustVisibilityBasedOnRole in initialize
     }
@@ -136,6 +137,16 @@ public class SubjectManagementController implements Initializable {
     // Delete Subject
     @FXML
     void deleteSubject(ActionEvent event) {
+        // Retrieve the user role from LoginController
+        userRole = LoginController.getCurrentUserRole();
+
+        // Check if the user is not an admin
+        if (userRole == null || "USER".equals(userRole)) {
+            showAlert(Alert.AlertType.ERROR, "Access Denied", "You do not have permission to delete subjects.");
+            return; // Exit the method if the user is a regular user
+        }
+
+        // Proceed with deleting the selected subject
         Subject selectedSubject = subjectTable.getSelectionModel().getSelectedItem();
         if (selectedSubject != null) {
             subjectList.remove(selectedSubject);
